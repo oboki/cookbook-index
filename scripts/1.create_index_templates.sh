@@ -99,6 +99,9 @@ curl -X PUT "localhost:9200/_template/template_codes?pretty" -H 'Content-Type: a
     },
     "mappings": {
         "properties": {
+            "parent_id": {
+                "type": "keyword"
+            },
             "column_name": {
                 "type": "text",
                 "analyzer": "nori_korean",
@@ -230,12 +233,18 @@ curl -X PUT "localhost:9200/_template/template_columns?pretty" -H 'Content-Type:
             "is_pk": {
                 "type": "keyword"
             },
+            "is_protected": {
+                "type": "keyword"
+            },
             "position": {
                 "type": "integer"
             },
             "description": {
                 "type": "text",
                 "analyzer": "nori_korean"
+            },
+            "parent_id": {
+                "type": "keyword"
             },
             "created_ts": {
                 "type": "date"
@@ -301,29 +310,6 @@ curl -X PUT "localhost:9200/_template/template_comments?pretty" -H 'Content-Type
                     }
                 }
             },
-            "column_name": {
-                "type": "text",
-                "analyzer": "nori_korean",
-                "fields": {
-                    "keyword": {
-                        "type": "keyword",
-                        "normalizer": "case_insensitive"
-                    }
-                }
-            },
-            "code": {
-                "type": "text",
-                "analyzer": "nori_korean",
-                "fields": {
-                    "keyword": {
-                        "type": "keyword",
-                        "normalizer": "case_insensitive"
-                    }
-                }
-            },
-            "object_type": {
-                "type": "keyword"
-            },
             "author": {
                 "type": "keyword"
             },
@@ -332,6 +318,9 @@ curl -X PUT "localhost:9200/_template/template_comments?pretty" -H 'Content-Type
                 "analyzer": "nori_korean"
             },
             "is_deleted": {
+                "type": "keyword"
+            },
+            "parent_id": {
                 "type": "keyword"
             },
             "created_ts": {
@@ -401,6 +390,18 @@ curl -X PUT "localhost:9200/_template/template_tables?pretty" -H 'Content-Type: 
             "entity_name": {
                 "type": "text",
                 "analyzer": "nori_korean"
+            },
+            "storage_type": {
+                "type": "keyword"
+            },
+            "partition_key": {
+                "type": "keyword"
+            },
+            "partition_range_from": {
+                "type": "keyword"
+            },
+            "partition_range_to": {
+                "type": "keyword"
             },
             "description": {
                 "type": "text",
