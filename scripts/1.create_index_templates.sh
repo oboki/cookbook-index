@@ -317,9 +317,6 @@ curl -X PUT "localhost:9200/_template/template_comments?pretty" -H 'Content-Type
                 "type": "text",
                 "analyzer": "nori_korean"
             },
-            "is_deleted": {
-                "type": "keyword"
-            },
             "parent_id": {
                 "type": "keyword"
             },
