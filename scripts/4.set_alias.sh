@@ -62,3 +62,16 @@ curl -X POST "localhost:9200/_aliases?pretty" -H 'Content-Type: application/json
     ]
 }
 '
+
+curl -X POST "localhost:9200/_aliases?pretty" -H 'Content-Type: application/json' -d '
+{
+    "actions":[
+        {
+            "add":{
+                "index":"users-v1",
+                "alias":"users"
+            }
+        }
+    ]
+}
+'
