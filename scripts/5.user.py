@@ -15,30 +15,47 @@ es_client = Elasticsearch(es_host, timeout=10)
 actions = []
 a = {
     "_index": "users-v1",
-    "_id": 'Anonymous',
+    "_id": 'oboki',
     "_source": {
-        "username": 'Anonymous',
+        "username": 'oboki',
         "bookmark": [
             {
-                "id": "7c3b431656114270d4ae",
-                "db_name": "DB_D",
-                "table_name": "TAB_A",
-                "entity_name": "테이블_A"
+                "db_name": "DB_B",
+                "entity_name": "\ud14c\uc774\ube14_D",
+                "id": "bd2a4022d13b3e4860eb",
+                "table_name": "TAB_D"
             },
             {
-                "id": "1fa187e64f2448d9db6c",
+                "db_name": "DB_D",
+                "entity_name": "\ud14c\uc774\ube14_A",
+                "id": "7c3b431656114270d4ae",
+                "table_name": "TAB_A"
+            },
+            {
+                "db_name": "DB_C",
+                "entity_name": "\ud14c\uc774\ube14_A",
+                "id": "82f1e039fa08e8b2095a",
+                "table_name": "TAB_A"
+            },
+            {
                 "db_name": "DB_A",
-                "table_name": "TAB_D",
-                "entity_name": "테이블_D"
+                "entity_name": "\ud14c\uc774\ube14_R",
+                "id": "66e6f31b829cb695e929",
+                "table_name": "TAB_R"
             }
         ],
-        "search_opt": "tables",
-        "recent_search_keywords": [
-            "Vestibulum",
-            "massa,",
-            "lacinia,",
-            "amet"
-        ],
+        "search_opts": {
+            "target":"tables",
+            "pagesize": {
+                "all": 4,
+                "single": 10,
+            },
+            "advanced": {
+                "enabled": False,
+                "items": []
+            }
+        },
+        "recent_search_keywords": [],
         "created_ts": current_ts_isof(),
         "modified_ts": current_ts_isof()
     }

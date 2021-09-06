@@ -194,7 +194,8 @@ curl -X PUT "localhost:9200/_template/template_columns?pretty" -H 'Content-Type:
     "mappings": {
         "properties": {
             "db_name": {
-                "type": "keyword"
+                "type": "keyword",
+                "normalizer": "case_insensitive"
             },
             "table_name": {
                 "type": "text",
@@ -218,11 +219,23 @@ curl -X PUT "localhost:9200/_template/template_columns?pretty" -H 'Content-Type:
             },
             "entity_name": {
                 "type": "text",
-                "analyzer": "nori_korean"
+                "analyzer": "nori_korean",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword",
+                        "normalizer": "case_insensitive"
+                    }
+                }
             },
             "attribute_name": {
                 "type": "text",
-                "analyzer": "nori_korean"
+                "analyzer": "nori_korean",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword",
+                        "normalizer": "case_insensitive"
+                    }
+                }
             },
             "data_type": {
                 "type": "keyword"
@@ -298,7 +311,8 @@ curl -X PUT "localhost:9200/_template/template_comments?pretty" -H 'Content-Type
     "mappings": {
         "properties": {
             "db_name": {
-                "type": "keyword"
+                "type": "keyword",
+                "normalizer": "case_insensitive"
             },
             "table_name": {
                 "type": "text",
@@ -372,7 +386,8 @@ curl -X PUT "localhost:9200/_template/template_tables?pretty" -H 'Content-Type: 
     "mappings": {
         "properties": {
             "db_name": {
-                "type": "keyword"
+                "type": "keyword",
+                "normalizer": "case_insensitive"
             },
             "table_name": {
                 "type": "text",
@@ -386,7 +401,13 @@ curl -X PUT "localhost:9200/_template/template_tables?pretty" -H 'Content-Type: 
             },
             "entity_name": {
                 "type": "text",
-                "analyzer": "nori_korean"
+                "analyzer": "nori_korean",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword",
+                        "normalizer": "case_insensitive"
+                    }
+                }
             },
             "storage_type": {
                 "type": "keyword"
@@ -409,6 +430,54 @@ curl -X PUT "localhost:9200/_template/template_tables?pretty" -H 'Content-Type: 
             },
             "modified_ts": {
                 "type": "date"
+            }
+        }
+    }
+}
+'
+
+curl -X PUT "localhost:9200/_template/template_users?pretty" -H 'Content-Type: application/json' -d '
+{
+    "template": "users-*",
+    "settings": {
+        "number_of_shards": 1,
+        "number_of_replicas": 0,
+        "refresh_interval": "10s",
+        "index": {
+            "analysis": {
+                "normalizer": {
+                    "case_insensitive": {
+                        "filter": [
+                            "lowercase",
+                            "asciifolding"
+                        ],
+                        "type": "custom",
+                        "char_filter": []
+                    }
+				},
+				"tokenizer": {
+					"nori_user_dict": {
+						"type": "nori_tokenizer",
+						"user_dictionary": "userdict_ko.txt",
+						"decompound_mode": "mixed"
+					}
+				},
+				"analyzer": {
+					"nori_korean": {
+						"filter": [
+							"lowercase"
+						],
+						"type": "custom",
+						"tokenizer": "nori_user_dict"
+					}
+				}
+            }
+        }
+    },
+    "mappings": {
+        "properties": {
+            "username": {
+                "type": "keyword"
             }
         }
     }

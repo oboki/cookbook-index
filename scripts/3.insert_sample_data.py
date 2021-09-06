@@ -67,6 +67,47 @@ for i in range(len(keywords)):
     }
     actions.append(a)
 
+a = {
+    "_index": "users-v1",
+    "_id": 'Anonymous',
+    "_source": {
+        "username": 'Anonymous',
+        "bookmark": [
+            {
+                "id": "7c3b431656114270d4ae",
+                "db_name": "DB_D",
+                "table_name": "TAB_A",
+                "entity_name": "테이블_A"
+            }
+        ],
+        "search_opt": "tables",
+        "created_ts": current_ts_isof(),
+        "modified_ts": current_ts_isof()
+    }
+}
+actions.append(a)
+
+a = {
+    "_index": "users-v1",
+    "_id": 'oboki',
+    "_source": {
+        "username": 'oboki',
+        "bookmark": [
+            {
+                "id": "7c3b431656114270d4ae",
+                "db_name": "DB_D",
+                "table_name": "TAB_A",
+                "entity_name": "테이블_A"
+            }
+        ],
+        "search_opt": "tables",
+        "created_ts": current_ts_isof(),
+        "modified_ts": current_ts_isof()
+    }
+}
+actions.append(a)
+
+
 for i in range(65, 91):
     CHR_I = chr(i)
     db_name = "DB_"+CHR_I
@@ -90,7 +131,7 @@ for i in range(65, 91):
             }
         }
         actions.append(a)
-        for k in range(65, 84):
+        for k in range(65, 77):
             CHR_K = chr(k)
             column_name = "COL_"+CHR_K
             a = {
@@ -114,24 +155,7 @@ for i in range(65, 91):
                 }
             }
             actions.append(a)
-
-            a = {
-                "_index": "comments-v1",
-                "_source": {
-                    "db_name": db_name,
-                    "table_name": table_name,
-                    "author": 'oboki',
-                    "comment": lorem(k % 15),
-                    "parent_id": hash_id(db_name+table_name),
-                    "is_deleted": "N",
-                    "created_ts": current_ts_isof(),
-                    "modified_ts": current_ts_isof()
-                }
-            }
-            if k < 70:
-                actions.append(a)
-
-            for l in range(65, 91):
+            for l in range(65, 72):
                 if j > 65: continue
 
                 CHR_L = chr(l)
@@ -144,8 +168,8 @@ for i in range(65, 91):
                     "_source": {
                         "column_name": column_name,
                         "attribute_name": attribute_name,
-                        "code": code_name,
-                        "description": keywords[l%len(keywords)],
+                        "code": keywords[l%len(keywords)],
+                        "description": keywords[(l+7)%len(keywords)],
                         "parent_id": hash_id(db_name+table_name),
                         "created_ts": current_ts_isof(),
                         "modified_ts": current_ts_isof()
@@ -153,5 +177,4 @@ for i in range(65, 91):
                 }
                 actions.append(a)
 
-#print(json.dumps(actions,indent=2))
 helpers.bulk(es_client, actions)
