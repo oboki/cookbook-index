@@ -1,4 +1,4 @@
-FROM docker.elastic.co/elasticsearch/elasticsearch:7.13.4
+FROM elasticsearch:7.13.4
 
 COPY archives/userdict_ko.txt /usr/share/elasticsearch/config/
 

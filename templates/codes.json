@@ -1,0 +1,91 @@
+{
+    "template": "codes-*",
+    "settings": {
+        "number_of_shards": 1,
+        "number_of_replicas": 0,
+        "refresh_interval": "10s",
+        "index": {
+            "analysis": {
+                "normalizer": {
+                    "case_insensitive": {
+                        "filter": [
+                            "lowercase",
+                            "asciifolding"
+                        ],
+                        "type": "custom",
+                        "char_filter": []
+                    }
+				},
+				"tokenizer": {
+					"nori_user_dict": {
+						"type": "nori_tokenizer",
+						"user_dictionary": "userdict_ko.txt",
+						"decompound_mode": "mixed"
+					}
+				},
+				"analyzer": {
+					"nori_korean": {
+						"filter": [
+							"lowercase"
+						],
+						"type": "custom",
+						"tokenizer": "nori_user_dict"
+					}
+				}
+            }
+        }
+    },
+    "mappings": {
+        "properties": {
+            "parent_id": {
+                "type": "keyword"
+            },
+            "column_name": {
+                "type": "text",
+                "analyzer": "nori_korean",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword",
+                        "normalizer": "case_insensitive"
+                    }
+                }
+            },
+            "attribute_name": {
+                "type": "text",
+                "analyzer": "nori_korean",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword",
+                        "normalizer": "case_insensitive"
+                    }
+                }
+            },
+            "code": {
+                "type": "text",
+                "analyzer": "nori_korean",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword",
+                        "normalizer": "case_insensitive"
+                    }
+                }
+            },
+            "description": {
+                "type": "text",
+                "analyzer": "nori_korean",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword",
+                        "normalizer": "case_insensitive"
+                    }
+                }
+            },
+            "created_ts": {
+                "type": "date"
+            },
+            "modified_ts": {
+                "type": "date"
+            }
+        }
+    }
+}
