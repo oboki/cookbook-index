@@ -1,0 +1,88 @@
+{
+    "template": "tables-*",
+    "settings": {
+        "number_of_shards": 1,
+        "number_of_replicas": 0,
+        "refresh_interval": "10s",
+        "index": {
+            "analysis": {
+                "normalizer": {
+                    "case_insensitive": {
+                        "filter": [
+                            "lowercase",
+                            "asciifolding"
+                        ],
+                        "type": "custom",
+                        "char_filter": []
+                    }
+				},
+				"tokenizer": {
+					"nori_user_dict": {
+						"type": "nori_tokenizer",
+						"user_dictionary": "userdict_ko.txt",
+						"decompound_mode": "mixed"
+					}
+				},
+				"analyzer": {
+					"nori_korean": {
+						"filter": [
+							"lowercase"
+						],
+						"type": "custom",
+						"tokenizer": "nori_user_dict"
+					}
+				}
+            }
+        }
+    },
+    "mappings": {
+        "properties": {
+            "db_name": {
+                "type": "keyword",
+                "normalizer": "case_insensitive"
+            },
+            "table_name": {
+                "type": "text",
+                "analyzer": "nori_korean",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword",
+                        "normalizer": "case_insensitive"
+                    }
+                }
+            },
+            "entity_name": {
+                "type": "text",
+                "analyzer": "nori_korean",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword",
+                        "normalizer": "case_insensitive"
+                    }
+                }
+            },
+            "storage_type": {
+                "type": "keyword"
+            },
+            "partition_key": {
+                "type": "keyword"
+            },
+            "partition_range_from": {
+                "type": "keyword"
+            },
+            "partition_range_to": {
+                "type": "keyword"
+            },
+            "description": {
+                "type": "text",
+                "analyzer": "nori_korean"
+            },
+            "created_ts": {
+                "type": "date"
+            },
+            "modified_ts": {
+                "type": "date"
+            }
+        }
+    }
+}
